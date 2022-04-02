@@ -1,6 +1,17 @@
 {
   "name": "reader",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
-  "license": "MIT"
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http": "^0.0.1-security",
+    "twitter-api-v2": "^1.11.2"
+  }
 }

@@ -23,3 +23,12 @@ services:
       - ./reporter:/app
     links:
       - db
+  reader:
+    container_name: whale-reader
+    build: ./reader
+    env_file:
+      - ./.env.local
+    ports: 
+      - "3000:3000"
+    volumes:
+      - ./reader:/app
