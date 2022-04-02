@@ -1,0 +1,25 @@
+version: "3"
+services:
+  db:
+    container_name: whale-db
+    image: postgres
+    restart: always
+    expose:
+      - "5432"
+    ports:
+      - "5431:5432"
+    env_file:
+      - ./.env.local
+  app:
+    container_name: whale-reporter
+    build: ./reporter
+    depends_on:
+      - db
+    env_file:
+      - ./.env.local
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./reporter:/app
+    links:
+      - db
