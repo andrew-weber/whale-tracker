@@ -25,6 +25,8 @@ services:
       - db
   reader:
     container_name: whale-reader
+    depends_on:
+      - db
     build: ./reader
     env_file:
       - ./.env.local
@@ -32,3 +34,5 @@ services:
       - "3000:3000"
     volumes:
       - ./reader:/app
+    links:
+      - db
