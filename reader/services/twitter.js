@@ -1,6 +1,5 @@
 import { TwitterApi } from "twitter-api-v2";
-
-const tweetMatch = RegExp(/^[$]\S{1,5} \d{4}-\d{2}-\d{2} [CP] [$]\d+.?\d*/);
+import { isValidTweet } from "../helpers/tweet-validator";
 
 export default class twitterService {
   client;
@@ -15,11 +14,13 @@ export default class twitterService {
       exclude: ["replies", "retweets"],
       start_time: "2022-04-05T00:00:00.00Z",
     });
+
     while (!result.done) {
       await result.fetchNext();
     }
+
     result.data.data.forEach(({ text: tweet, created_at }) => {
-      if (tweetMatch.test(tweet)) {
+      if (isValidTweet(tweet)) {
         console.log(created_at, tweet.replace(/\n/g, " "));
       }
     });

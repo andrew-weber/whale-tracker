@@ -1,7 +1,5 @@
 import { ETwitterStreamEvent } from "twitter-api-v2";
-
-const tweetMatch = RegExp(/^[$]\S{1,5} \d{4}-\d{2}-\d{2} [CP] [$]\d+.?\d*/);
-
+import { isValidTweet } from "../helpers/tweet-validator";
 export default class stream {
   client;
 
@@ -31,7 +29,7 @@ export default class stream {
       ETwitterStreamEvent.Data,
       (eventData) => {
         const tweet = eventData.data.text;
-        if (tweetMatch.test(tweet)) {
+        if (isValidTweet(tweet)) {
           console.log(tweet.replace(/\n/g, " "));
         }
       }
