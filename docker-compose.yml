@@ -15,9 +15,7 @@ services:
     container_name: whale-db-migrations
     depends_on:
       - db
-    build: 
-      context: prisma
-      dockerfile: Dockerfile
+    build: ./prisma
     env_file:
       - ./.env.local
       
@@ -39,6 +37,7 @@ services:
     container_name: whale-reader
     depends_on:
       - db
+      - db_migration
     build: ./reader
     env_file:
       - ./.env.local
@@ -46,5 +45,6 @@ services:
       - "3000:3000"
     volumes:
       - ./reader:/app
+      - ./prisma:/app/prisma
     links:
       - db

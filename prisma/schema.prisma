@@ -3,11 +3,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
+
 model OptionPosition {
-  id           Int      @id @default(autoincrement())
-  ticker       String
-  option_type  String
-  strike_price Int
-  tweeted_at   DateTime
-  created_at   DateTime @default(now())
+  id         Int       @id @default(autoincrement())
+  tweet_id   String    @unique
+  ticker     String
+  full_tweet String
+  tweeted_at DateTime?
+  created_at DateTime  @default(now())
 }

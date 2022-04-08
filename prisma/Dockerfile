@@ -4,6 +4,6 @@ WORKDIR /app
 
 RUN yarn global add prisma
 
-ADD ./ ./prisma/
+ADD . ./prisma/
 
 CMD prisma migrate deploy
