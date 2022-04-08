@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "global": "^4.4.0",
+    "prisma": "^3.12.0"
+  },
+  "name": "prisma",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "create-migration": "DATABASE_URL=postgresql://wt:password@localhost:5431/whale_tracker?schema=public prisma migrate dev --name $MIGRATION_NAME",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

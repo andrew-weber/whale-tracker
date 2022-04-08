@@ -1,5 +1,5 @@
 import { ETwitterStreamEvent } from "twitter-api-v2";
-import { isValidTweet } from "../helpers/tweet-validator";
+import { isValidTweet } from "../helpers/tweet-validator.js";
 export default class stream {
   client;
 

@@ -10,6 +10,17 @@ services:
       - "5431:5432"
     env_file:
       - ./.env.local
+
+  db_migration:
+    container_name: whale-db-migrations
+    depends_on:
+      - db
+    build: 
+      context: prisma
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env.local
+      
   app:
     container_name: whale-reporter
     build: ./reporter
@@ -23,6 +34,7 @@ services:
       - ./reporter:/app
     links:
       - db
+
   reader:
     container_name: whale-reader
     depends_on:
