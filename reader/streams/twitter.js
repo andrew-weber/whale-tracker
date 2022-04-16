@@ -1,5 +1,5 @@
 import { ETwitterStreamEvent } from "twitter-api-v2";
-import { isValidTweet } from "../helpers/tweet-validator.js";
+import { parseTweet } from "../helpers/tweet-validator.js";
 import { optionPosition } from "../services/db/index.js";
 
 export default class stream {
@@ -30,12 +30,12 @@ export default class stream {
         id: tweet_id,
         created_at: tweeted_at,
       } = eventData.data;
-
-      if (isValidTweet(tweet)) {
+      const parsedTweet = parseTweet(tweet);
+      if (parsedTweet) {
         await optionPosition.create({
-          ticker: tweet.split(" ")[0],
-          full_tweet: tweet.replace(/\n/g, " "),
+          ...parsedTweet,
           tweet_id,
+          full_tweet: tweet.replace(/\n/g, " "),
           tweeted_at,
         });
       }

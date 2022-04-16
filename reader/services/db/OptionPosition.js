@@ -8,7 +8,7 @@ export default class OptionPosition {
     try {
       await this.db.optionPosition.create({ data });
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
   };
 }

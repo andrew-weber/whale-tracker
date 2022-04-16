@@ -8,10 +8,13 @@ generator client {
 }
 
 model OptionPosition {
-  id         Int       @id @default(autoincrement())
-  tweet_id   String    @unique
-  ticker     String
-  full_tweet String
-  tweeted_at DateTime?
-  created_at DateTime  @default(now())
+  id           Int       @id @default(autoincrement())
+  tweet_id     String    @unique
+  ticker       String
+  expiry       String
+  option_type  String
+  strike_price String
+  full_tweet   String
+  tweeted_at   DateTime?
+  created_at   DateTime  @default(now())
 }

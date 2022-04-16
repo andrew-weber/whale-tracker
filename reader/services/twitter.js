@@ -1,5 +1,5 @@
 import { TwitterApi } from "twitter-api-v2";
-import { isValidTweet } from "../helpers/tweet-validator.js";
+import { parseTweet } from "../helpers/tweet-validator.js";
 import { optionPosition } from "./db/index.js";
 
 export default class twitterService {
@@ -22,11 +22,12 @@ export default class twitterService {
 
     for (const { text: tweet, created_at: tweeted_at, id: tweet_id } of result
       .data.data) {
-      if (isValidTweet(tweet)) {
+      const parsedTweet = parseTweet(tweet);
+      if (parsedTweet) {
         await optionPosition.create({
-          ticker: tweet.split(" ")[0],
-          full_tweet: tweet.replace(/\n/g, " "),
+          ...parsedTweet,
           tweet_id,
+          full_tweet: tweet.replace(/\n/g, " "),
           tweeted_at,
         });
       }
