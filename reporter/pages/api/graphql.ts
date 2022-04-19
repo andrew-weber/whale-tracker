@@ -1,7 +1,12 @@
 import { gql, ApolloServer } from 'apollo-server-micro';
 import resolvers from './resolvers'
+import {
+  typeDefs as scalarTypeDefs,
+  resolvers as scalarResolvers,
+} from 'graphql-scalars';
 
 const typeDefs = gql`
+
   type Position {
     id: ID
     tweet_id: String
@@ -9,7 +14,7 @@ const typeDefs = gql`
     expiry: String
     option_type: String
     strike_price: String
-    # tweeted_at: DateTime
+    tweeted_at: DateTime
   }
 
   type Query {
@@ -18,8 +23,14 @@ const typeDefs = gql`
 `;
 
 const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
+  typeDefs: [
+    ...scalarTypeDefs,
+    typeDefs,
+  ],
+  resolvers: [
+    scalarResolvers,
+    resolvers,
+  ],
 });
 
 const startServer = apolloServer.start();

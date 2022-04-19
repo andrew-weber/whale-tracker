@@ -1,17 +1,19 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { gql } from "@apollo/client";
+
+import client from "../apollo-client";
 import styles from "../styles/Home.module.css";
 import Header from './header'
+import PositionTable from './PositionTable'
 
-import { gql } from "@apollo/client";
-import client from "../apollo-client";
-
-type Position = {
+export type Position = {
   id: string,
   tweet_id: string,
   option_type: string,
   strike_price: string,
   ticker: string,
+  tweeted_at: Date,
 }
 
 const Home: NextPage<{positions: Position[]}> = ({positions}) => {
@@ -22,7 +24,7 @@ const Home: NextPage<{positions: Position[]}> = ({positions}) => {
         <Header />
       </Head>
       <main className={styles.main}>
-        {JSON.stringify(positions)}
+        <PositionTable positions={positions} />
       </main>
 
       <footer></footer>
@@ -41,6 +43,7 @@ export async function getServerSideProps() {
           strike_price
           ticker
           tweet_id
+          tweeted_at
         }
       }
     `,

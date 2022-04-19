@@ -5,6 +5,10 @@ export default class OptionPosition {
   }
 
   findMany = async () => {
-    return await this.db.optionPosition.findMany()
+    return await this.db.optionPosition.findMany({
+      orderBy: {
+        tweeted_at: 'desc'
+      }
+    })
   }
 }

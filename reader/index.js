@@ -7,4 +7,4 @@ const stream = new twitterStream(twitter.client);
 // await stream.setupRules();
 await stream.stream();
 
-await twitter.getTweets();
+// await twitter.getTweets();
