@@ -19,7 +19,7 @@ services:
     env_file:
       - ./.env.local
       
-  app:
+  reporter:
     container_name: whale-reporter
     build: ./reporter
     depends_on:
@@ -30,6 +30,7 @@ services:
       - "1337:1337"
     volumes:
       - ./reporter:/app
+      - ./prisma:/app/prisma
     links:
       - db
 

@@ -1,24 +1,21 @@
 import { gql, ApolloServer } from 'apollo-server-micro';
+import resolvers from './resolvers'
 
 const typeDefs = gql`
-  type User {
+  type Position {
     id: ID
+    tweet_id: String
+    ticker: String
+    expiry: String
+    option_type: String
+    strike_price: String
+    # tweeted_at: DateTime
   }
 
   type Query {
-    getUser: User
+    getPositions: [Position]
   }
 `;
-
-const resolvers = {
-  Query: {
-    getUser: () => {
-      return {
-        id: 'Foo',
-      };
-    },
-  },
-};
 
 const apolloServer = new ApolloServer({
   typeDefs,
