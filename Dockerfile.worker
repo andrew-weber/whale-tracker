@@ -4,5 +4,9 @@ ENV NODE_ENV=development
 RUN yarn global add prisma
 
 WORKDIR /app
+ADD reader .
+ADD prisma prisma
 
-CMD yarn install; prisma generate; yarn start
+RUN yarn install; prisma generate
+
+CMD yarn start

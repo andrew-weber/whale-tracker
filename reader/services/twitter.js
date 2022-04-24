@@ -1,6 +1,7 @@
 import { TwitterApi } from "twitter-api-v2";
 import { parseTweet } from "../helpers/tweet-validator.js";
 import { optionPosition } from "./db/index.js";
+import moment from "moment";
 
 export default class twitterService {
   client;
@@ -13,7 +14,7 @@ export default class twitterService {
     const result = await this.client.v2.userTimeline("1200616796295847936", {
       "tweet.fields": ["created_at"],
       exclude: ["replies", "retweets"],
-      start_time: "2022-04-15T00:00:00.00Z",
+      start_time: moment().subtract(1, "day").startOf("day").format(),
     });
 
     while (!result.done) {

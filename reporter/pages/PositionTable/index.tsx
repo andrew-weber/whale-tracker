@@ -13,7 +13,7 @@ type TableParams = {
   positions: Position[]
 }
 
-const PositionTable = ({positions} : TableParams) => {
+const PositionTable = ({positions = []} : TableParams) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">

@@ -14,6 +14,7 @@
   "dependencies": {
     "@prisma/client": "^3.12.0",
     "http": "^0.0.1-security",
+    "moment": "^2.29.3",
     "prisma": "^3.12.0",
     "twitter-api-v2": "^1.11.2"
   }

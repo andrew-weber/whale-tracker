@@ -15,22 +15,21 @@ services:
     container_name: whale-db-migrations
     depends_on:
       - db
-    build: ./prisma
+    build: Dockerfile.migrate
     env_file:
       - ./.env.local
       
   reporter:
     container_name: whale-reporter
-    build: ./reporter
+    build: Dockerfile.web
     depends_on:
       - db
     env_file:
       - ./.env.local
     ports:
-      - "1337:1337"
+      - "3000:3000"
     volumes:
       - ./reporter:/app
-      - ./prisma:/app/prisma
     links:
       - db
 
@@ -39,13 +38,12 @@ services:
     depends_on:
       - db
       - db_migration
-    build: ./reader
+    build: Dockerfile.worker
     env_file:
       - ./.env.local
     ports: 
-      - "3000:3000"
+      - "${PORT}:${PORT}"
     volumes:
       - ./reader:/app
-      - ./prisma:/app/prisma
     links:
       - db
