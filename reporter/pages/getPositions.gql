@@ -1,0 +1,12 @@
+getPositions {
+  expiry
+  id
+  option_type
+  strike_price
+  underlying
+  bid
+  ask
+  ticker
+  tweet_id
+  tweeted_at
+}
