@@ -14,7 +14,7 @@ export default class twitterService {
     const result = await this.client.v2.userTimeline("1200616796295847936", {
       "tweet.fields": ["created_at"],
       exclude: ["replies", "retweets"],
-      start_time: moment().subtract(1, "day").startOf("day").format(),
+      start_time: moment().subtract(3, "day").startOf("day").format(),
     });
 
     while (!result.done) {

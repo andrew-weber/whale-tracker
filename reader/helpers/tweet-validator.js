@@ -12,12 +12,17 @@ export const parseTweet = (text) => {
   const ticker = RegExp(/^[$]\S{1,5}/).exec(text)[0];
   const expiry = RegExp(/\d{4}-\d{2}-\d{2}/).exec(text)[0];
   const option_type = RegExp(/[CP]/).exec(text)[0];
-  const strike_price = RegExp(/[$]\d+.?\d*/).exec(text)[0];
+  const [strike_price, underlying, bid, ask] = [
+    ...text.matchAll(/[$]\d+.?\d*/g),
+  ].map((obj) => obj[0]);
 
   return {
     ticker,
     expiry,
     option_type,
     strike_price,
+    underlying,
+    bid,
+    ask,
   };
 };

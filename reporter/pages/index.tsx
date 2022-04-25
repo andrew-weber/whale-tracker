@@ -12,6 +12,9 @@ export type Position = {
   tweet_id: string,
   option_type: string,
   strike_price: string,
+  underlying: string,
+  bid: string,
+  ask: string,
   ticker: string,
   tweeted_at: Date,
 }
@@ -41,6 +44,9 @@ export async function getServerSideProps() {
           id
           option_type
           strike_price
+          underlying
+          bid
+          ask
           ticker
           tweet_id
           tweeted_at

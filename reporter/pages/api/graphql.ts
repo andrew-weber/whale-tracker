@@ -6,7 +6,6 @@ import {
 } from 'graphql-scalars';
 
 const typeDefs = gql`
-
   type Position {
     id: ID
     tweet_id: String
@@ -14,6 +13,9 @@ const typeDefs = gql`
     expiry: String
     option_type: String
     strike_price: String
+    underlying: String
+    bid: String
+    ask: String
     tweeted_at: DateTime
   }
 
