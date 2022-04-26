@@ -23,9 +23,10 @@ services:
       
   reporter:
     container_name: whale-reporter
-    build:
-      context: . 
-      dockerfile: ./Dockerfile.web
+    # build: ./reporter
+    build: 
+      context: .
+      dockerfile: Dockerfile.web
     depends_on:
       - db
     env_file:
@@ -34,16 +35,26 @@ services:
       - "1337:1337"
     links:
       - db
+    # volumes:
+    #   - type: bind
+    #     source: ./reporter
+    #     target: /app
+    #   - type: bind 
+    #     source: ./prisma
+    #     target: /app/prisma
 
   reader:
     container_name: whale-reader
     depends_on:
       - db
       - db_migration
-    build:
-      context: . 
-      dockerfile: ./Dockerfile.worker
+    build: 
+      context: .
+      dockerfile: Dockerfile.worker
     env_file:
       - ./.env.local
     links:
       - db
+    # volumes:
+    #   - ./reporter:/app
+    #   - ./prisma:/app/prisma

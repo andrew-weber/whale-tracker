@@ -1,34 +1,31 @@
 import type { NextPage } from "next";
+import { useState, useEffect } from 'react';
 import Head from "next/head";
-import { dehydrate, QueryClient, useQuery } from 'react-query';
-import { gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
-import client from "../apollo-client";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+
 import styles from "../styles/Home.module.css";
 import Header from './header'
 import PositionTable from './PositionTable'
 
-const getPositions = async () => {
-  const { data } = await client.query({
-    query: gql`
-      query {
-        getPositions {
-          expiry
-          id
-          option_type
-          strike_price
-          underlying
-          bid
-          ask
-          ticker
-          tweet_id
-          tweeted_at
-        }
-      }
-    `,
-  });
-  return data.getPositions
-}
+const GET_POSITIONS = gql`
+  query {
+    getPositions {
+      expiry
+      id
+      option_type
+      strike_price
+      underlying
+      bid
+      ask
+      ticker
+      tweet_id
+      tweeted_at
+    }
+  }
+`;
 
 export type Position = {
   id: string,
@@ -43,7 +40,17 @@ export type Position = {
 }
 
 const Home: NextPage = () => {
-  const { data: positions } = useQuery<Position[]>('positions', getPositions)
+  
+  const [ticker, setTicker] = useState<String>()
+  const { data, refetch } = useQuery(GET_POSITIONS)
+  const positions: Position[] = data?.getPositions;
+
+  // const [positions, setPositions] = useState<Position[]>()
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTicker(e.target.value)
+  }
+
+  useEffect(() => { refetch(ticker) }, [ticker, refetch])
 
   return (
     <div className={styles.container}>
@@ -52,6 +59,21 @@ const Home: NextPage = () => {
         <Header />
       </Head>
       <main className={styles.main}>
+        <Box
+          component="form"
+          sx={{
+            '& > :not(style)': { m: 1, width: '25ch' },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField 
+            id="standard-basic" 
+            label="Ticker" 
+            variant="standard"
+            onChange={handleChange} 
+          />
+        </Box>
         <PositionTable positions={positions || []} />
       </main>
 
@@ -59,17 +81,5 @@ const Home: NextPage = () => {
     </div>
   );
 };
-
-export async function getServerSideProps() {
-  const queryClient = new QueryClient()
-  await queryClient.prefetchQuery('positions', getPositions)
-  
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  }
-
-}
 
 export default Home;
