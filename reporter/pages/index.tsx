@@ -11,20 +11,20 @@ import Header from './header'
 import PositionTable from './PositionTable'
 
 const GET_POSITIONS = gql`
-  query {
-    getPositions {
-      expiry
-      id
-      option_type
-      strike_price
-      underlying
-      bid
-      ask
-      ticker
-      tweet_id
-      tweeted_at
-    }
+query getPositions($ticker: String) {
+  getPositions(ticker: $ticker) {
+    expiry
+    id
+    option_type
+    strike_price
+    underlying
+    bid
+    ask
+    ticker
+    tweet_id
+    tweeted_at
   }
+}
 `;
 
 export type Position = {
@@ -42,7 +42,7 @@ export type Position = {
 const Home: NextPage = () => {
   
   const [ticker, setTicker] = useState<String>()
-  const { data, refetch } = useQuery(GET_POSITIONS)
+  const { data, refetch } = useQuery(GET_POSITIONS, { variables: { ticker } })
   const positions: Position[] = data?.getPositions;
 
   // const [positions, setPositions] = useState<Position[]>()
@@ -50,35 +50,37 @@ const Home: NextPage = () => {
     setTicker(e.target.value)
   }
 
-  useEffect(() => { refetch(ticker) }, [ticker, refetch])
+  useEffect(() => { refetch({ ticker }) }, [ticker, refetch])
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Whale Watching</title>
-        <Header />
-      </Head>
-      <main className={styles.main}>
-        <Box
-          component="form"
-          sx={{
-            '& > :not(style)': { m: 1, width: '25ch' },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField 
-            id="standard-basic" 
-            label="Ticker" 
-            variant="standard"
-            onChange={handleChange} 
-          />
-        </Box>
-        <PositionTable positions={positions || []} />
-      </main>
+    <>
+      <Header />
+      <div className={styles.container}>
+        <Head>
+          <title>Whale Watching</title>
+        </Head>
+        <main className={styles.main}>
+          <Box
+            component="form"
+            sx={{
+              '& > :not(style)': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField 
+              id="standard-basic" 
+              label="Ticker" 
+              variant="standard"
+              onChange={handleChange} 
+            />
+          </Box>
+          <PositionTable positions={positions || []} />
+        </main>
 
-      <footer></footer>
-    </div>
+        <footer></footer>
+      </div>
+    </>
   );
 };
 

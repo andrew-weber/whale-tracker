@@ -1,12 +1,14 @@
-getPositions {
-  expiry
-  id
-  option_type
-  strike_price
-  underlying
-  bid
-  ask
-  ticker
-  tweet_id
-  tweeted_at
+query getPositions($ticker: String) {
+  getPositions(ticker: $ticker) {
+    expiry
+    id
+    option_type
+    strike_price
+    underlying
+    bid
+    ask
+    ticker
+    tweet_id
+    tweeted_at
+  }
 }

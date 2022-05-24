@@ -2,9 +2,12 @@ import { OptionPositions } from './db'
 
 const resolvers = {
   Query: {
-    getPositions: async (_: any, {ticker, page, pageSize}: any) => {
-      console.log(ticker)
-      return await OptionPositions.find({ticker, page, pageSize}) 
+    getPositions: async (_: any,  {ticker, page, pageSize}: any) => {
+      return await OptionPositions.find({
+        ticker: ticker?.toUpperCase(), 
+        page, 
+        pageSize
+      }) 
     }
   },
 };
