@@ -7,6 +7,6 @@ ADD . .
 
 EXPOSE $PORT
 
-RUN yarn install; prisma generate; yarn build
+RUN yarn install; prisma generate
 
-CMD yarn start
+CMD yarn run dev

@@ -1,4 +1,6 @@
 version: "3.9"
+volumes:
+  nodemodules: {}
 services:
   db:
     container_name: whale-db
@@ -25,23 +27,20 @@ services:
     container_name: whale-reporter
     # build: ./reporter
     build: 
-      context: .
-      dockerfile: Dockerfile.web
+      context: ./reporter
+      dockerfile: Dockerfile
     depends_on:
+      - db
+    links:
       - db
     env_file:
       - ./.env.local
     ports:
       - "1337:1337"
-    links:
-      - db
-    # volumes:
-    #   - type: bind
-    #     source: ./reporter
-    #     target: /app
-    #   - type: bind 
-    #     source: ./prisma
-    #     target: /app/prisma
+    volumes:
+      - ./reporter:/app
+      - ./prisma:/app/prisma
+      - nodemodules:/app/node_modules
 
   reader:
     container_name: whale-reader
