@@ -23,7 +23,8 @@
     "next": "^12.1.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-query": "^3.38.0"
+    "react-query": "^3.38.0",
+    "use-debounce": "^8.0.1"
   },
   "devDependencies": {
     "@types/node": "17.0.23",
