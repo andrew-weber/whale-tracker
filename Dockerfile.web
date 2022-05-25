@@ -8,8 +8,8 @@ WORKDIR /app
 ADD reporter/package.json .
 RUN yarn install
 
-ADD prisma prisma
 ADD reporter .
+ADD prisma prisma
 
 RUN prisma generate; yarn build
 
