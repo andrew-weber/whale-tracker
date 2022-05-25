@@ -4,7 +4,7 @@ import ApolloClient from '../apollo-client'
 import '../styles/globals.css'
 
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={ApolloClient}>
       <Component {...pageProps} />
@@ -12,4 +12,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   ) 
 }
 
-export default MyApp
+export default App

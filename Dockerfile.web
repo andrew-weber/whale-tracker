@@ -1,16 +1,16 @@
-FROM node:14.17.0
+FROM node:14.17.4
 
 RUN yarn global add prisma
 
 EXPOSE $PORT
 
 WORKDIR /app
-ADD reporter/package.json .
+COPY reporter/package.json .
+COPY reporter/yarn.lock .
 RUN yarn install
 
-ADD reporter .
-ADD prisma prisma
-
+COPY reporter .
+COPY prisma prisma
 RUN prisma generate; yarn build
 
 CMD yarn start
