@@ -12,10 +12,10 @@ export default class stream {
   async setupRules() {
     let rules = await this.client.v2.streamRules();
     if (rules.meta.result_count === 0) {
-      // const addedRules = await this.client.v2.updateStreamRules({
-      //   add: [{ value: "from:unusual_whales", tag: "whale" }],
-      // });
-      // console.log("added:", addedRules);
+      const addedRules = await this.client.v2.updateStreamRules({
+        add: [{ value: "from:unusual_whales", tag: "whale" }],
+      });
+      console.log("added:", addedRules);
     }
   }
 

@@ -20,7 +20,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    getPositions: [Position]
+    getPositions(ticker: String, page: Int, pageSize: Int): [Position]
   }
 `;
 
