@@ -6,14 +6,22 @@ import { useDebouncedCallback } from 'use-debounce'
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import { Dayjs } from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import styles from "../styles/Home.module.css";
 import Header from './header'
 import PositionTable from './PositionTable'
 
 const GET_POSITIONS = gql`
-  query getPositions($ticker: String) {
-    getPositions(ticker: $ticker) {
+  query getPositions($ticker: String, $afterExpiryDate: String, $beforeExpiryDate: String) {
+    getPositions(
+      ticker: $ticker, 
+      afterExpiryDate: $afterExpiryDate, 
+      beforeExpiryDate: $beforeExpiryDate
+    ) {
       expiry
       id
       option_type
@@ -42,8 +50,10 @@ export type Position = {
 
 const Home: NextPage = () => {
   const [ticker, setTicker] = useState<String>()
+  const [afterExpiryDate, setAfterExpiryDate] = useState<string | null>(null)
+  const [beforeExpiryDate, setBeforeExpiryDate] = useState<string | null>(null)
   
-  const { data, refetch } = useQuery(GET_POSITIONS, { variables: { ticker } })
+  const { data, refetch } = useQuery(GET_POSITIONS, { variables: { ticker, afterExpiryDate, beforeExpiryDate } })
   const positions: Position[] = data?.getPositions;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +61,10 @@ const Home: NextPage = () => {
   }
   const debouncedHandleChange = useDebouncedCallback(handleChange, 300);
 
-  useEffect(() => { refetch({ ticker }) }, [ticker, refetch])
+  useEffect(() => { 
+    console.log(afterExpiryDate, beforeExpiryDate)
+    refetch({ ticker, afterExpiryDate, beforeExpiryDate })
+   }, [ticker, afterExpiryDate, beforeExpiryDate, refetch])
 
   return (
     <>
@@ -75,6 +88,24 @@ const Home: NextPage = () => {
               variant="standard"
               onChange={debouncedHandleChange} 
             />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Expiry After"
+                value={afterExpiryDate}
+                onChange={
+                  (val: Dayjs | null) => {setAfterExpiryDate(val ? val.format('YYYY-MM-DD'): null)}
+                }
+                renderInput={(params: any) => <TextField {...params} />}
+              />
+              <DatePicker
+                label="Expiry Before"
+                value={beforeExpiryDate}
+                onChange={
+                  (val: Dayjs | null) => {setBeforeExpiryDate(val ? val.format('YYYY-MM-DD'): null)}
+                }
+                renderInput={(params: any) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
           </Box>
           <PositionTable positions={positions || []} />
         </main>

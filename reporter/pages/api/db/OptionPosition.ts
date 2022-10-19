@@ -7,16 +7,24 @@ export default class OptionPosition {
   find = async ({ 
     ticker, 
     page = 1, 
-    pageSize = 20 
+    pageSize = 20,
+    afterExpiryDate,
+    beforeExpiryDate
   }: { 
     ticker: string, 
     page?: number, 
-    pageSize?: number 
+    pageSize?: number,
+    afterExpiryDate?: string,
+    beforeExpiryDate?: string 
   }) => {
     return await this.db.optionPosition.findMany({
       where: {
         ticker: ticker ? {
           equals: `$${ticker}`
+        } : undefined,
+        expiry: afterExpiryDate || beforeExpiryDate ? {
+          lte: beforeExpiryDate ? beforeExpiryDate : undefined,
+          gte: afterExpiryDate ? afterExpiryDate : undefined
         } : undefined
       },
       orderBy: {

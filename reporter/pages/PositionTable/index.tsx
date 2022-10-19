@@ -21,10 +21,10 @@ const PositionTable = ({positions = []} : TableParams) => {
           <TableRow>
             <TableCell>Ticker</TableCell>
             <TableCell>Option</TableCell>
-            <TableCell>Underlying</TableCell>
-            <TableCell>Bid/Ask</TableCell>
-            <TableCell>Expiry</TableCell>
             <TableCell>Strike Price</TableCell>
+            <TableCell>Expiry</TableCell>
+            <TableCell>Bid/Ask</TableCell>
+            <TableCell>Underlying</TableCell>
             <TableCell>Tweeted</TableCell>
           </TableRow>
         </TableHead>
@@ -33,10 +33,10 @@ const PositionTable = ({positions = []} : TableParams) => {
             <TableRow key={row.tweet_id}>
               <TableCell>{row.ticker}</TableCell>
               <TableCell>{row.option_type === 'C' ? 'CALL' : row.option_type === 'P' ? 'PUT' : null }</TableCell>
-              <TableCell>{row.underlying}</TableCell>
-              <TableCell>{row.bid} / {row.ask}</TableCell>
-              <TableCell>{row.expiry}</TableCell>
               <TableCell>{row.strike_price}</TableCell>
+              <TableCell>{row.expiry}</TableCell>
+              <TableCell>{row.bid} / {row.ask}</TableCell>
+              <TableCell>{row.underlying}</TableCell>
               <TableCell>{moment(row.tweeted_at).format('M/DD/YY hh:mm a')}</TableCell>
             </TableRow>
           ))}

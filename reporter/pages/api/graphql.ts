@@ -20,7 +20,13 @@ const typeDefs = gql`
   }
 
   type Query {
-    getPositions(ticker: String, page: Int, pageSize: Int): [Position]
+    getPositions(
+      ticker: String, 
+      page: Int, 
+      pageSize: Int, 
+      beforeExpiryDate: String, 
+      afterExpiryDate: String
+    ): [Position]
   }
 `;
 
