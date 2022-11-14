@@ -6,6 +6,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+
 import moment from 'moment';
 import type { Position } from '../index'
 
@@ -37,7 +40,12 @@ const PositionTable = ({positions = []} : TableParams) => {
               <TableCell>{row.expiry}</TableCell>
               <TableCell>{row.bid} / {row.ask}</TableCell>
               <TableCell>{row.underlying}</TableCell>
-              <TableCell>{moment(row.tweeted_at).format('M/DD/YY hh:mm a')}</TableCell>
+              <TableCell>
+                {moment(row.tweeted_at).format('M/DD/YY hh:mm a') }
+                <IconButton onClick={() => {window.open(`https://www.twitter.com/x/status/${row.tweet_id}`)}}>
+                  <OpenInNewIcon sx={{fontSize: 12, paddingLeft: '2px'}}/>
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
