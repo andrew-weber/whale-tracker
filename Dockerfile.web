@@ -5,8 +5,8 @@ RUN yarn global add prisma
 EXPOSE $PORT
 
 WORKDIR /app
-COPY reporter/package.json .
-COPY reporter/yarn.lock .
+ADD reporter/package.json .
+ADD reporter/yarn.lock .
 RUN yarn install
 
 COPY reporter .

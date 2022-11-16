@@ -5,9 +5,8 @@ RUN yarn global add prisma
 EXPOSE $PORT
 
 WORKDIR /app
-
-COPY package.json .
-COPY yarn.lock .
+ADD package.json .
+ADD yarn.lock .
 RUN yarn install
 
 COPY . .
